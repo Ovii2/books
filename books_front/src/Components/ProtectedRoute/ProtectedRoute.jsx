@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { getUserRoleFromToken } from '../../utils/jwt';
 import './ProtectedRoute.css';
 
@@ -9,16 +9,13 @@ const ProtectedRoute = ({ children, adminOnly, ...rest }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    const role = getUserRoleFromToken(token);
 
-    if (token && role) {
-      setIsAuthorized(true);
-      if (role === 'ADMIN') {
-        setIsAdmin(true);
-      }
-    } else {
-      setIsAuthorized(false);
-      setIsAdmin(false);
+    let role = '';
+
+    if (token) {
+      role = getUserRoleFromToken(token);
+      if (role) setIsAuthorized(true);
+      if (role == 'ADMIN') setIsAdmin(true);
     }
   }, []);
 

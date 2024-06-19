@@ -11,7 +11,7 @@ const Navigation = () => {
   const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem('token');
   const userName = isLoggedIn ? getUserNameFromToken(token) : null;
-  const role = getUserRoleFromToken(token);
+  const role = isLoggedIn ? getUserRoleFromToken(token) : '';
 
   const logoutHandler = () => {
     localStorage.removeItem('token');
