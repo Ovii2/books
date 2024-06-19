@@ -30,7 +30,7 @@ function App() {
             <Route
               path='/categories'
               element={
-                <ProtectedRoute>
+                <ProtectedRoute adminOnly={true}>
                   <CategoriesPage />
                 </ProtectedRoute>
               }
