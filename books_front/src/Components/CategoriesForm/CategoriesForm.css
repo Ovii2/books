@@ -1,0 +1,36 @@
+.categories-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.categories-form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  margin-top: 1rem;
+  width: 20rem;
+}
+
+.error {
+  color: var(--tomato);
+}
+
+.categories-btn {
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  border: none;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  background-color: var(--dark-slate-gray);
+  color: var(--white);
+}
+
+.categories-title {
+  text-align: center;
+  margin-top: 6rem;
+}

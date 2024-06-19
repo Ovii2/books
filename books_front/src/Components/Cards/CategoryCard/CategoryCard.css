@@ -1,0 +1,7 @@
+.category-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--subtle-gray);
+  padding: 1rem;
+  width: 10rem;
+}

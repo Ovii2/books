@@ -1,0 +1,31 @@
+.nav-link {
+  color: var(--white);
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-right: 0.5rem;
+}
+
+.active {
+  background-color: var(--dark-salmon);
+  padding: 0.2rem;
+  border-radius: 0.3rem;
+}
+
+.logout {
+  background-color: transparent;
+  border: none;
+  color: var(--white);
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+  margin-left: -0.3rem;
+  cursor: pointer;
+}
+
+.username {
+  margin-right: 1rem;
+  font-weight: 600;
+}
