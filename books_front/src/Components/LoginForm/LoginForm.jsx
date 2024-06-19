@@ -31,7 +31,7 @@ const LoginForm = () => {
       localStorage.setItem('token', response.token);
       localStorage.setItem('user', JSON.stringify(response));
       reset();
-      navigate('/categories');
+      navigate('/books');
       toast.success('Login successfull!');
     } catch (error) {
       setError(error.message);

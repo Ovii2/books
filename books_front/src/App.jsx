@@ -9,6 +9,9 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import CategoriesPage from './pages/CategoriesPage/CategoriesPage';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+import BooksPage from './pages/BooksPage/BooksPage';
+import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
 
 function App() {
   const [user, setUser] = useState({});
@@ -24,7 +27,23 @@ function App() {
             <Route path='/' element={<Navigate to='/register' />} />
             <Route path='/register' element={<RegisterPage />} />
             <Route path='/login' element={<LoginPage />} />
-            <Route path='/categories' element={<CategoriesPage />} />
+            <Route
+              path='/categories'
+              element={
+                <ProtectedRoute>
+                  <CategoriesPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/books'
+              element={
+                <ProtectedRoute>
+                  <BooksPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route path='*' element={<NotFoundPage />} />
           </Routes>
         </UserContext.Provider>
       </CategoriesProvider>
