@@ -7,11 +7,13 @@ import UserContext from '../../Context/UserContext/UserContext';
 import TextField from '@mui/material/TextField';
 
 import './CategoriesForm.css';
+import CategoriesContext from '../../Context/CategoriesContext/CategoriesContext';
 
 const CategoriesForm = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [error, setError] = useState('');
-  const { setUpdate, setCategories } = useContext(UserContext);
+  // const { setUpdate, setCategories } = useContext(UserContext);
+  const { setUpdate, setCategories } = useContext(CategoriesContext);
 
   const {
     register,
@@ -25,22 +27,18 @@ const CategoriesForm = () => {
     },
   });
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const formSubmitHandler = async (data) => {
     try {
       const response = await postCategory(data);
-console.log(response);
-      
+      console.log(response);
 
-      //   setUpdate((update) => update + 1);
-
+      setUpdate((update) => update + 1);
       setIsFormOpen(false);
       reset();
-      
       //   navigate('/books');
       toast.success('Category added!');
-      
     } catch (error) {
       setError(error.message);
       toast.error('Error adding category');
@@ -50,7 +48,7 @@ console.log(response);
   return (
     <div className='categories-form-container'>
       <button className='categories-btn' onClick={() => setIsFormOpen(!isFormOpen)}>
-        Add category
+        +Add category
       </button>
       {isFormOpen && (
         <form className='categories-form' noValidate onSubmit={handleSubmit(formSubmitHandler)}>
