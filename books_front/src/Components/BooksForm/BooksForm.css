@@ -1,0 +1,36 @@
+.books-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.books-form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  margin-top: 1rem;
+  width: 20rem;
+}
+
+.error {
+  color: var(--tomato);
+}
+
+.books-btn {
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  border: none;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  background-color: var(--light-coral);
+  color: var(--white);
+}
+
+.books-title {
+  text-align: center;
+  margin-top: 6rem;
+}

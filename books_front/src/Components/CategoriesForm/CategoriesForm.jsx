@@ -32,13 +32,12 @@ const CategoriesForm = () => {
   const formSubmitHandler = async (data) => {
     try {
       const response = await postCategory(data);
-      console.log(response);
-
       setUpdate((update) => update + 1);
       setIsFormOpen(false);
       reset();
       //   navigate('/books');
       toast.success('Category added!');
+      return response;
     } catch (error) {
       setError(error.message);
       toast.error('Error adding category');

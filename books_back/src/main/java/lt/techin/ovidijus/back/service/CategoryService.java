@@ -42,11 +42,11 @@ public class CategoryService {
         if (categoryRepository.existsByTitle(categoryDTO.getTitle())) {
             throw new RuntimeException("Category already exists!");
         }
-        Category category = new Category(
-                categoryDTO.getId(),
-                categoryDTO.getTitle(),
-                categoryDTO.getDescription()
-        );
+
+        Category category = new Category();
+        category.setTitle(categoryDTO.getTitle());
+        category.setDescription(categoryDTO.getDescription());
+
         return categoryRepository.save(category);
     }
 

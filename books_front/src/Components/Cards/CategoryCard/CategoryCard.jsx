@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import './CategoryCard.css';
@@ -8,11 +8,7 @@ const CategoryCard = ({ category, setUpdate }) => {
 
   const { setValue } = useForm();
 
-  useEffect(() => {
-    // const user = JSON.parse(localStorage.getItem('admin'));
-    // if (user && user.data && user.data.role) {
-    //   setUserRole(user.data.role);
-    // }
+  useEffect(() => {  
 
     if (category) {
       setValue('title', category.title);

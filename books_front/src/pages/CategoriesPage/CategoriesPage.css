@@ -13,3 +13,8 @@
 .protected-nav-link {
   color: var(--tomato);
 }
+
+.no-categories {
+  text-align: center;
+  font-weight: 600;
+}

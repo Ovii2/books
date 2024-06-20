@@ -1,0 +1,15 @@
+.books-page {
+  margin: 1rem auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  width: 20%;
+  padding: 2rem;
+  border-radius: 0.3rem;
+}
+
+.no-books {
+  text-align: center;
+  font-weight: 600;
+}

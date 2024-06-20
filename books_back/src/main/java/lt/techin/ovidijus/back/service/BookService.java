@@ -1,11 +1,15 @@
 package lt.techin.ovidijus.back.service;
 
 import lt.techin.ovidijus.back.dto.BookDTO;
+import lt.techin.ovidijus.back.dto.CategoryDTO;
 import lt.techin.ovidijus.back.exceptions.BookNotFoundException;
+import lt.techin.ovidijus.back.exceptions.CategoryNotFoundException;
 import lt.techin.ovidijus.back.exceptions.NotAdminException;
 import lt.techin.ovidijus.back.model.Book;
+import lt.techin.ovidijus.back.model.Category;
 import lt.techin.ovidijus.back.model.User;
 import lt.techin.ovidijus.back.repository.BookRepository;
+import lt.techin.ovidijus.back.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,20 +19,22 @@ import java.util.List;
 @Service
 public class BookService {
 
+    private final CategoryRepository categoryRepository;
     private BookRepository bookRepository;
     private UserService userService;
 
     @Autowired
-    public BookService(BookRepository bookRepository, UserService userService) {
+    public BookService(BookRepository bookRepository, UserService userService, CategoryRepository categoryRepository) {
         this.bookRepository = bookRepository;
         this.userService = userService;
+        this.categoryRepository = categoryRepository;
     }
 
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }
 
-    public Book addBook(BookDTO bookDTO) throws NotAdminException {
+    public Book addBook(BookDTO bookDTO) throws NotAdminException, CategoryNotFoundException {
         User user = checkAuthorized();
         if (!user.getRole().equals("ADMIN")) {
             throw new NotAdminException("Only admins can add books!");
@@ -36,15 +42,20 @@ public class BookService {
         if (bookRepository.existsByTitle(bookDTO.getTitle())) {
             throw new RuntimeException("This book already exists!");
         }
-        Book book = new Book(
-                bookDTO.getId(),
-                bookDTO.getTitle(),
-                bookDTO.getDescription(),
-                bookDTO.getIsbn(),
-                bookDTO.getImage(),
-                bookDTO.getPages(),
-                bookDTO.getCategory()
-        );
+
+        Category category =
+                categoryRepository.findById(bookDTO.getCategoryId()).orElseThrow(() -> new CategoryNotFoundException(
+                        "Category not found"));
+
+
+        Book book = new Book();
+        book.setTitle(bookDTO.getTitle());
+        book.setDescription(bookDTO.getDescription());
+        book.setIsbn(bookDTO.getIsbn());
+        book.setImage(bookDTO.getImage());
+        book.setPages(bookDTO.getPages());
+        book.setCategory(category);
+
         return bookRepository.save(book);
     }
 

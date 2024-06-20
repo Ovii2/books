@@ -14,10 +14,7 @@ const Navigation = () => {
   const role = isLoggedIn ? getUserRoleFromToken(token) : '';
 
   const logoutHandler = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    localStorage.removeItem('role');
-    localStorage.removeItem('username');
+    localStorage.clear();
     toast.success('Logged out!');
     navigate('/login', { replace: true });
   };

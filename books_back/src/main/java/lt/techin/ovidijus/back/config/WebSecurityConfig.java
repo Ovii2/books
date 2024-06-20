@@ -35,7 +35,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/register", "/login", "/", "/error").permitAll()
                         .requestMatchers("/categories/**").authenticated()
-//                        .requestMatchers("/books/**").authenticated()
+                        .requestMatchers("/books/**").authenticated()
                         .anyRequest().authenticated())
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)

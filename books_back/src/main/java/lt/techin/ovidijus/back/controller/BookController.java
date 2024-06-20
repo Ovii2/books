@@ -2,6 +2,7 @@ package lt.techin.ovidijus.back.controller;
 
 import lt.techin.ovidijus.back.dto.BookDTO;
 import lt.techin.ovidijus.back.exceptions.BookNotFoundException;
+import lt.techin.ovidijus.back.exceptions.CategoryNotFoundException;
 import lt.techin.ovidijus.back.exceptions.NotAdminException;
 import lt.techin.ovidijus.back.model.Book;
 import lt.techin.ovidijus.back.service.BookService;
@@ -31,7 +32,8 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<Book> addBook(@RequestBody BookDTO bookDTO) throws NotAdminException {
+    public ResponseEntity<Book> addBook(@RequestBody BookDTO bookDTO) throws NotAdminException,
+            CategoryNotFoundException {
         Book newBook = bookService.addBook(bookDTO);
         return new ResponseEntity<>(newBook, HttpStatus.CREATED);
     }

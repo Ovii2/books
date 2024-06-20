@@ -42,3 +42,17 @@ export const postCategory = async (data) => {
     throw new Error(`Failed to save data ${error.message}`);
   }
 };
+
+export const postBook = async (data) => {
+  const token = localStorage.getItem('token');
+  try {
+    const response = await axios.post(`${API_URL}/books`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to save data ${error.message}`);
+  }
+};

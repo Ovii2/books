@@ -1,5 +1,6 @@
 package lt.techin.ovidijus.back.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,10 +15,14 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Book {
 
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column(name = "title")
     private String title;
@@ -33,9 +38,6 @@ public class Book {
 
     @Column(name = "pages")
     private Integer pages;
-
-    @Column(name = "category")
-    private String category;
 
 
 }

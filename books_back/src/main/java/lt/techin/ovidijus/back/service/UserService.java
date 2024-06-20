@@ -36,14 +36,14 @@ public class UserService {
         if (userRepository.existsByUserName(userDTO.getUserName())) {
             return "This user name already exists!";
         }
-        userDTO.setRole("USER");
-        User user = new User(
-                userDTO.getId(),
-                userDTO.getUserName(),
-                userDTO.getEmail(),
-                authenticationService.encodePassword(userDTO.getPassword()),
-                userDTO.getRole()
-        );
+
+        User user = new User();
+        user.setId(userDTO.getId());
+        user.setUserName(userDTO.getUserName());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(authenticationService.encodePassword(userDTO.getPassword()));
+        user.setRole("USER");
+
         userRepository.save(user);
         return "User registered successfully!";
     }

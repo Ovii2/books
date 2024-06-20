@@ -33,3 +33,31 @@ export const getAllDataAuth = async () => {
     throw new Error(`Error fetching all data: ${error.message}`);
   }
 };
+
+export const getCategories = async () => {
+  const token = localStorage.getItem('token');
+  try {
+    const resp = await axios.get(`${API_URL}/categories`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return resp.data;
+  } catch (error) {
+    throw new Error(`Error fetching all data: ${error.message}`);
+  }
+};
+
+export const getAllBooksAuth = async () => {
+  const token = localStorage.getItem('token');
+  try {
+    const resp = await axios.get(`${API_URL}/books`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return resp.data;
+  } catch (error) {
+    throw new Error(`Error fetching all data: ${error.message}`);
+  }
+};

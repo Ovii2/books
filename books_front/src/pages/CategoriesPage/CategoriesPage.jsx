@@ -7,19 +7,18 @@ import './CategoriesPage.css';
 import { getAllDataAuth } from '../../services/get';
 
 const CategoriesPage = () => {
-  const [isLoading, setIsloading] = useState(true);
-  const { update, setUpdate, categories, setCategories } = useContext(CategoriesContext);
+  const [isLoading, setIsLoading] = useState(true);
+  const { update, setCategories, categories } = useContext(CategoriesContext);
 
   const fetchData = async () => {
-    // setIsloading(true);
+    setIsLoading(true);
     try {
       const data = await getAllDataAuth();
       setCategories(data);
-      // setFilteredPets(categories);
     } catch (error) {
       toast.error(error.message);
     } finally {
-      // setIsloading(false);
+      setIsLoading(false);
     }
   };
 
@@ -32,7 +31,13 @@ const CategoriesPage = () => {
       <h1 className='categories-title'>Categories</h1>
       <div className='categories-page'>
         <CategoriesForm />
-        <CategoriesList />
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : categories.length === 0 ? (
+          <p className='no-categories'>No categories available</p>
+        ) : (
+          <CategoriesList />
+        )}
       </div>
     </>
   );
