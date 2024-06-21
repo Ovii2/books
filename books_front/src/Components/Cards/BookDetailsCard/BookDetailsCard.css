@@ -1,0 +1,13 @@
+.book-details-container {
+  margin: 1rem;
+}
+
+.book-details-card {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 2rem;
+}
+
+.book-details-card-image {
+  max-width: 20%;
+}

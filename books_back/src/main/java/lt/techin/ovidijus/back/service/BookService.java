@@ -1,7 +1,6 @@
 package lt.techin.ovidijus.back.service;
 
 import lt.techin.ovidijus.back.dto.BookDTO;
-import lt.techin.ovidijus.back.dto.CategoryDTO;
 import lt.techin.ovidijus.back.exceptions.BookNotFoundException;
 import lt.techin.ovidijus.back.exceptions.CategoryNotFoundException;
 import lt.techin.ovidijus.back.exceptions.NotAdminException;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookService {
@@ -32,6 +32,10 @@ public class BookService {
 
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
+    }
+
+    public Optional<Book> getOneBook(long id){
+        return bookRepository.findById(id);
     }
 
     public Book addBook(BookDTO bookDTO) throws NotAdminException, CategoryNotFoundException {

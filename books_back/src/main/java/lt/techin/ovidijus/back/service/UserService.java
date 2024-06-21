@@ -38,7 +38,6 @@ public class UserService {
         }
 
         User user = new User();
-        user.setId(userDTO.getId());
         user.setUserName(userDTO.getUserName());
         user.setEmail(userDTO.getEmail());
         user.setPassword(authenticationService.encodePassword(userDTO.getPassword()));

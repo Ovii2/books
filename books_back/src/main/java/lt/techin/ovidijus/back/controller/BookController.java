@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -31,9 +32,15 @@ public class BookController {
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Book> getOneBook(@PathVariable long id) {
+        Optional<Book> book = bookService.getOneBook(id);
+        return book.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
     @PostMapping
-    public ResponseEntity<Book> addBook(@RequestBody BookDTO bookDTO) throws NotAdminException,
-            CategoryNotFoundException {
+    public ResponseEntity<Book> addBook(@RequestBody BookDTO bookDTO) throws NotAdminException, CategoryNotFoundException {
         Book newBook = bookService.addBook(bookDTO);
         return new ResponseEntity<>(newBook, HttpStatus.CREATED);
     }

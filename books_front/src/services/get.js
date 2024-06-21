@@ -20,6 +20,20 @@ export const getOne = async (id) => {
   }
 };
 
+export const getOneBook = async (id) => {
+  const token = localStorage.getItem('token');
+  try {
+    const resp = await axios.get(`${API_URL}/books/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return resp.data;
+  } catch (error) {
+    console.error(`Error fetching book for ID ${id}: ${error.message}`);
+  }
+};
+
 export const getAllDataAuth = async () => {
   const token = localStorage.getItem('token');
   try {

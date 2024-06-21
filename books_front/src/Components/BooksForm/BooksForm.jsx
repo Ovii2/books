@@ -100,7 +100,7 @@ const BooksForm = () => {
                   ))}
                 </Select>
               </FormControl>
-              {errors.category && <div className='error'>{errors.category.message}</div>}
+              {errors.categoryId && <div className='error'>{errors.categoryId.message}</div>}
 
               <TextField
                 sx={{

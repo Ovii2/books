@@ -1,6 +1,5 @@
 package lt.techin.ovidijus.back.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,7 +30,7 @@ public class Book {
     private String description;
 
     @Column(name = "isbn")
-    private Integer Isbn;
+    private String Isbn;
 
     @Column(name = "image")
     private String image;

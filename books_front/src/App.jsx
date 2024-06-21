@@ -13,6 +13,7 @@ import CategoriesPage from './pages/CategoriesPage/CategoriesPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import BooksPage from './pages/BooksPage/BooksPage';
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
+import BookDetailsPage from './pages/BookDetailsPage/BookDetailsPage';
 
 function App() {
   const [user, setUser] = useState({});
@@ -42,6 +43,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <BooksPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/books/:id'
+                element={
+                  <ProtectedRoute>
+                    <BookDetailsPage />
                   </ProtectedRoute>
                 }
               />
