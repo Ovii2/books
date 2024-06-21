@@ -10,7 +10,6 @@ import { NavLink, useParams } from 'react-router-dom';
 const BookDetailsCard = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  const { books, setBooks } = useContext(BooksContext);
   const [book, setBook] = useState(null);
   const { id } = useParams();
 
@@ -34,11 +33,12 @@ const BookDetailsCard = () => {
     <div className='book-details-container'>
       <NavLink to={`/books`} className='back-arrow'>
         <ArrowCircleLeftOutlinedIcon />
+        <p>Back to books</p>
       </NavLink>
       {book ? (
         <div className='book-details-card'>
-          <div className='book-details-card-image'>
-            <img src={`${book.image}`} alt='book' />
+          <div>
+            <img className='book-details-card-image' src={`${book.image}`} alt='book' />
           </div>
           <div className='book-details-card-info'>
             <p>

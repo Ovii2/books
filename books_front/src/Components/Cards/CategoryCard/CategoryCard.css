@@ -2,6 +2,23 @@
   display: flex;
   flex-direction: column;
   border: 1px solid var(--subtle-gray);
-  padding: 1rem;
-  width: 10rem;
+  padding: 1.5rem;
+  width: max-content;
+}
+
+.category-title {
+  display: flex;
+  align-items: center;
+}
+
+.edit-title {
+  margin-top: 0.5rem;
+  margin-bottom: 0.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.edit-description {
+  display: flex;
+  align-items: center;
 }

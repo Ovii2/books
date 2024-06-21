@@ -1,5 +1,6 @@
 .book-details-container {
   margin: 1rem;
+  width: 70vw;
 }
 
 .book-details-card {
@@ -9,5 +10,16 @@
 }
 
 .book-details-card-image {
-  max-width: 20%;
+  width: 14vw;
+}
+
+.book-details-card-info {
+  width: 30vw;
+}
+
+.back-arrow {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  width: 9rem;
 }

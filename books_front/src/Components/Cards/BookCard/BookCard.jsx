@@ -11,7 +11,6 @@ const BookCard = ({ book, setUpdate }) => {
 
   useEffect(() => {
     if (book) {
-      console.log(book);
       setValue('category', book.category);
       setValue('title', book.title);
       setValue('isbn', book.isbn);
@@ -29,7 +28,6 @@ const BookCard = ({ book, setUpdate }) => {
         <p>Category: {category.title}</p>
         <p>Isbn: {isbn}</p>
         <p>Pages: {pages}</p>
-        <p>Description: {description}</p>
       </div>
     </NavLink>
   );

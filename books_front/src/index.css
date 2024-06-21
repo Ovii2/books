@@ -32,9 +32,9 @@ textarea {
   resize: vertical;
 }
 
-img {
+/* img {
   max-width: 100%;
-}
+} */
 
 .loading {
   text-align: center;
