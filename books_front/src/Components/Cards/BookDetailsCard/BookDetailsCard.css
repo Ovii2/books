@@ -23,3 +23,58 @@
   gap: 0.2rem;
   width: 9rem;
 }
+
+.edit-book-description {
+  width: -webkit-fill-available;
+  height: 10rem;
+}
+
+.input-pages {
+  display: flex;
+}
+
+.input-isbn {
+  display: flex;
+}
+
+.input-book-title {
+  display: flex;
+}
+
+.input-title {
+  width: 20rem;
+}
+
+.image-container {
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  cursor: pointer;
+  gap: 0.2rem;
+}
+
+.input-book-image {
+  display: flex;
+  align-items: stretch;
+  position: absolute;
+  transform: translate(0.2rem, -12rem);
+  z-index: 10;
+}
+
+.faded-image {
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+}
+
+.edit-image-btn {
+  margin-top: 0.5rem;
+  border: none;
+  background-color: var(--lime-green);
+  padding: 0.3rem 1.5rem;
+  color: var(--black);
+}
+
+.input-image {
+  width: 13rem;
+}

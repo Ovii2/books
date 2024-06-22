@@ -66,7 +66,7 @@ public class BookService {
 
     public Book updateBook(long id, Book book) throws BookNotFoundException, NotAdminException {
         User user = checkAuthorized();
-        if (user.getRole().equals("ADMIN")) {
+        if (!user.getRole().equals("ADMIN")) {
             throw new NotAdminException("Only admins can edit books.");
         }
 

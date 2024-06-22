@@ -1,5 +1,6 @@
 .books-list {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.5rem;
+  justify-content: center;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.8rem;
 }

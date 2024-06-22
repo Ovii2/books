@@ -5,7 +5,7 @@ import './BookCard.css';
 import { NavLink } from 'react-router-dom';
 
 const BookCard = ({ book, setUpdate }) => {
-  const { category, title, isbn, image, pages, description, id } = book;
+  const { category, title, isbn, image, pages, id } = book;
 
   const { setValue } = useForm();
 
@@ -21,13 +21,15 @@ const BookCard = ({ book, setUpdate }) => {
   }, [category, setValue]);
 
   return (
-    <NavLink to={`/books/${id}`}>
+    <NavLink to={`/books/${id}`} book={book}>
       <div className='book-card'>
-        <img src={`${image}`} alt='book' />
-        <p>Title: {title}</p>
-        <p>Category: {category.title}</p>
-        <p>Isbn: {isbn}</p>
-        <p>Pages: {pages}</p>
+        <img className='book-img' src={`${image}`} alt='book' />
+        <div className='book-info'>
+          <p>Title: {title}</p>
+          <p>Category: {category.title}</p>
+          <p>Isbn: {isbn}</p>
+          <p>Pages: {pages}</p>
+        </div>
       </div>
     </NavLink>
   );

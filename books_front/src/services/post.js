@@ -2,6 +2,8 @@ import axios from 'axios';
 // import jwtDecode from 'jwt-decode';
 const API_URL = import.meta.env.VITE_API_URL;
 
+const token = localStorage.getItem('token');
+
 export const postData = async (data) => {
   try {
     const response = await axios.post(API_URL, data);
@@ -30,7 +32,6 @@ export const loginPost = async (data) => {
 };
 
 export const postCategory = async (data) => {
-  const token = localStorage.getItem('token');
   try {
     const response = await axios.post(`${API_URL}/categories`, data, {
       headers: {
@@ -44,7 +45,6 @@ export const postCategory = async (data) => {
 };
 
 export const postBook = async (data) => {
-  const token = localStorage.getItem('token');
   try {
     const response = await axios.post(`${API_URL}/books`, data, {
       headers: {

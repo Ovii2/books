@@ -3,13 +3,11 @@ import { useForm } from 'react-hook-form';
 import ModeOutlinedIcon from '@mui/icons-material/ModeOutlined';
 import CheckIcon from '@mui/icons-material/Check';
 import CancelIcon from '@mui/icons-material/Cancel';
-import axios from 'axios';
-
-import './CategoryCard.css';
 import { getUserRoleFromToken } from '../../../utils/jwt';
 import DeleteCategoryModal from '../../DeleteCategoryModal/DeleteCateogryModal';
+import { updateDataAuth } from '../../../services/update';
 
-const API_URL = import.meta.env.VITE_API_URL;
+import './CategoryCard.css';
 
 const CategoryCard = ({ category, setUpdate }) => {
   const { title, description } = category;
@@ -20,25 +18,10 @@ const CategoryCard = ({ category, setUpdate }) => {
   const token = localStorage.getItem('token');
   const role = getUserRoleFromToken(token);
 
-  useEffect(() => {
-    if (category) {
-      setValue('title', category.title);
-      setValue('description', category.description);
-    }
-  }, [category, setValue]);
-
-  const handleTitleChange = async (data) => {
+  const handleCategoryTitleChange = async (data) => {
     try {
       if (role === 'ADMIN') {
-        await axios.patch(
-          `${API_URL}/categories/${category.id}`,
-          { title: data.title },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        await updateDataAuth(`categories/${category.id}`, { title: data.title });
         setUpdate((prev) => !prev);
         setEditTitle(false);
       }
@@ -47,18 +30,10 @@ const CategoryCard = ({ category, setUpdate }) => {
     }
   };
 
-  const handleDescriptionChange = async (data) => {
+  const handleCategoryDescriptionChange = async (data) => {
     try {
       if (role === 'ADMIN') {
-        await axios.patch(
-          `${API_URL}/categories/${category.id}`,
-          { description: data.description },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        await updateDataAuth(`categories/${category.id}`, { description: data.description });
         setUpdate((prev) => !prev);
         setEditDescription(false);
       }
@@ -66,6 +41,13 @@ const CategoryCard = ({ category, setUpdate }) => {
       console.error('Error updating description:', error.message);
     }
   };
+
+  useEffect(() => {
+    if (category) {
+      setValue('title', category.title);
+      setValue('description', category.description);
+    }
+  }, [category, setValue]);
 
   return (
     <div className='category-card'>
@@ -80,7 +62,7 @@ const CategoryCard = ({ category, setUpdate }) => {
           <input {...register('title')} defaultValue={title} />
           <CheckIcon
             sx={{ color: 'green', cursor: 'pointer' }}
-            onClick={handleSubmit(handleTitleChange)}
+            onClick={handleSubmit(handleCategoryTitleChange)}
           />
           <CancelIcon
             sx={{ color: 'tomato', cursor: 'pointer' }}
@@ -92,7 +74,10 @@ const CategoryCard = ({ category, setUpdate }) => {
           Title: {title}
           <ModeOutlinedIcon
             sx={{ color: 'brown', cursor: 'pointer', marginLeft: '0.2rem' }}
-            onClick={() => setEditTitle(true)}
+            onClick={() => {
+              setEditTitle(true);
+              setEditDescription(false);
+            }}
           />
         </h4>
       )}
@@ -102,7 +87,7 @@ const CategoryCard = ({ category, setUpdate }) => {
           <textarea {...register('description')} defaultValue={description} />
           <CheckIcon
             sx={{ color: 'green', cursor: 'pointer' }}
-            onClick={handleSubmit(handleDescriptionChange)}
+            onClick={handleSubmit(handleCategoryDescriptionChange)}
           />
           <CancelIcon
             sx={{ color: 'tomato', cursor: 'pointer' }}
@@ -114,7 +99,10 @@ const CategoryCard = ({ category, setUpdate }) => {
           Description: {description}
           <ModeOutlinedIcon
             sx={{ color: 'brown', cursor: 'pointer', marginLeft: '0.2rem' }}
-            onClick={() => setEditDescription(true)}
+            onClick={() => {
+              setEditDescription(true);
+              setEditTitle(false);
+            }}
           />
         </p>
       )}
