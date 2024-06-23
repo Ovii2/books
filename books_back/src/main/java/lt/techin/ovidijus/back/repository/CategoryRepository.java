@@ -10,7 +10,5 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     Optional<Category> findByTitle(Category title);
 
-    //    List<Category> findByUserId(Long userId);
-
     boolean existsByTitle(String title);
 }

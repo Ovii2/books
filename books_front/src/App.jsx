@@ -6,6 +6,7 @@ import Footer from './Components/Footer/Footer';
 import UserContext from './Context/UserContext/UserContext';
 import { CategoriesProvider } from './Context/CategoriesContext/CategoriesContext';
 import { BooksProvider } from './Context/BooksContext/BooksContext';
+import { CommentsProvider } from './Context/CommentsContext/CommentContext';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
@@ -23,42 +24,44 @@ function App() {
     <>
       <ToastContainer autoClose={800} position='top-center' />
       <Header />
-      <BooksProvider>
-        <CategoriesProvider>
-          <UserContext.Provider value={{ user, setUpdate }}>
-            <Routes>
-              <Route path='/' element={<Navigate to='/register' />} />
-              <Route path='/register' element={<RegisterPage />} />
-              <Route path='/login' element={<LoginPage />} />
-              <Route
-                path='/categories'
-                element={
-                  <ProtectedRoute adminOnly={true}>
-                    <CategoriesPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path='/books'
-                element={
-                  <ProtectedRoute>
-                    <BooksPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path='/books/:id'
-                element={
-                  <ProtectedRoute>
-                    <BookDetailsPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path='*' element={<NotFoundPage />} />
-            </Routes>
-          </UserContext.Provider>
-        </CategoriesProvider>
-      </BooksProvider>
+      <CommentsProvider>
+        <BooksProvider>
+          <CategoriesProvider>
+            <UserContext.Provider value={{ user, setUpdate }}>
+              <Routes>
+                <Route path='/' element={<Navigate to='/register' />} />
+                <Route path='/register' element={<RegisterPage />} />
+                <Route path='/login' element={<LoginPage />} />
+                <Route
+                  path='/categories'
+                  element={
+                    <ProtectedRoute adminOnly={true}>
+                      <CategoriesPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path='/books'
+                  element={
+                    <ProtectedRoute>
+                      <BooksPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path='/books/:id'
+                  element={
+                    <ProtectedRoute>
+                      <BookDetailsPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path='*' element={<NotFoundPage />} />
+              </Routes>
+            </UserContext.Provider>
+          </CategoriesProvider>
+        </BooksProvider>
+      </CommentsProvider>
       <Footer />
     </>
   );

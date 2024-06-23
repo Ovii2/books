@@ -1,9 +1,7 @@
 import { useForm } from 'react-hook-form';
-import { useState, useRef, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { postCategory } from '../../services/post';
-import { NavLink, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import UserContext from '../../Context/UserContext/UserContext';
 import TextField from '@mui/material/TextField';
 
 import './CategoriesForm.css';
@@ -12,7 +10,6 @@ import CategoriesContext from '../../Context/CategoriesContext/CategoriesContext
 const CategoriesForm = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [error, setError] = useState('');
-  // const { setUpdate, setCategories } = useContext(UserContext);
   const { setUpdate, setCategories } = useContext(CategoriesContext);
 
   const {
@@ -27,15 +24,12 @@ const CategoriesForm = () => {
     },
   });
 
-  // const navigate = useNavigate();
-
   const formSubmitHandler = async (data) => {
     try {
       const response = await postCategory(data);
       setUpdate((update) => update + 1);
       setIsFormOpen(false);
       reset();
-      //   navigate('/books');
       toast.success('Category added!');
       return response;
     } catch (error) {

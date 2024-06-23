@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import CategoryCard from '../../Cards/CategoryCard/CategoryCard';
 import CategoriesContext from '../../../Context/CategoriesContext/CategoriesContext';
 
-import './CategoriesLists.css';
+import './CategoriesList.css';
 
 const CategoriesList = () => {
   const { setUpdate, categories } = useContext(CategoriesContext);

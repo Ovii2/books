@@ -2,6 +2,8 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+const token = localStorage.getItem('token');
+
 export const getAllData = async () => {
   try {
     const resp = await axios.get(API_URL);
@@ -21,7 +23,6 @@ export const getOne = async (id) => {
 };
 
 export const getOneBook = async (id) => {
-  const token = localStorage.getItem('token');
   try {
     const resp = await axios.get(`${API_URL}/books/${id}`, {
       headers: {
@@ -35,7 +36,6 @@ export const getOneBook = async (id) => {
 };
 
 export const getAllDataAuth = async () => {
-  const token = localStorage.getItem('token');
   try {
     const resp = await axios.get(`${API_URL}/categories`, {
       headers: {
@@ -49,7 +49,6 @@ export const getAllDataAuth = async () => {
 };
 
 export const getCategories = async () => {
-  const token = localStorage.getItem('token');
   try {
     const resp = await axios.get(`${API_URL}/categories`, {
       headers: {
@@ -63,9 +62,21 @@ export const getCategories = async () => {
 };
 
 export const getAllBooksAuth = async () => {
-  const token = localStorage.getItem('token');
   try {
     const resp = await axios.get(`${API_URL}/books`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return resp.data;
+  } catch (error) {
+    throw new Error(`Error fetching all data: ${error.message}`);
+  }
+};
+
+export const getAllCommentsAuth = async (id, commentId) => {
+  try {
+    const resp = await axios.get(`${API_URL}/books/${id}/${commentId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

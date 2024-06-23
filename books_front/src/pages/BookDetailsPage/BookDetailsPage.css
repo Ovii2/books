@@ -1,0 +1,10 @@
+.books-details-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 1rem;
+}
+
+.no-comments {
+  font-weight: 600;
+}

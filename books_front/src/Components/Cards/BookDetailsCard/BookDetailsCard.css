@@ -1,12 +1,11 @@
 .book-details-container {
-  margin: 1rem;
   width: 70vw;
 }
 
 .book-details-card {
   display: flex;
   gap: 1rem;
-  margin: 1rem 2rem;
+  margin-bottom: 5rem;
 }
 
 .book-details-card-image {
@@ -22,6 +21,7 @@
   align-items: center;
   gap: 0.2rem;
   width: 9rem;
+  margin-bottom: 0.4rem;
 }
 
 .edit-book-description {
@@ -77,4 +77,11 @@
 
 .input-image {
   width: 13rem;
+}
+
+.add-comment-btn {
+  border: none;
+  background: var(--gradient-violet-blue);
+  color: var(--white);
+  padding: 0.5rem 1.5rem;
 }

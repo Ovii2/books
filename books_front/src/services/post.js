@@ -40,7 +40,7 @@ export const postCategory = async (data) => {
     });
     return response.data;
   } catch (error) {
-    throw new Error(`Failed to save data ${error.message}`);
+    throw new Error(`Failed to save category ${error.message}`);
   }
 };
 
@@ -53,6 +53,19 @@ export const postBook = async (data) => {
     });
     return response.data;
   } catch (error) {
-    throw new Error(`Failed to save data ${error.message}`);
+    throw new Error(`Failed to save book ${error.message}`);
+  }
+};
+
+export const postComment = async (data) => {
+  try {
+    const response = await axios.post(`${API_URL}/books/comments`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to save comment ${error.message}`);
   }
 };

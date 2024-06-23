@@ -9,5 +9,6 @@ public class CommentDTO {
 
     private Long id;
     private String comment;
+    private String author;
     private LocalDate date;
 }
