@@ -1,6 +1,8 @@
 import axios from 'axios';
 const API_URL = import.meta.env.VITE_API_URL;
 
+const token = localStorage.getItem('token');
+
 export const deleteData = async (id) => {
   try {
     const resp = await axios.delete(`${API_URL}/${id}`);
@@ -11,7 +13,6 @@ export const deleteData = async (id) => {
 };
 
 export const deleteCategory = async (id) => {
-  const token = localStorage.getItem('token');
   try {
     const resp = await axios.delete(`${API_URL}/categories/${id}`, {
       headers: {
@@ -20,6 +21,19 @@ export const deleteCategory = async (id) => {
     });
     return resp.data;
   } catch (error) {
-    throw new Error(`Error deleting data ${error.message}`);
+    throw new Error(`Error deleting category ${error.message}`);
+  }
+};
+
+export const deleteBook = async (id) => {
+  try {
+    const resp = await axios.delete(`${API_URL}/books/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return resp.data;
+  } catch (error) {
+    throw new Error(`Error deleting book ${error.message}`);
   }
 };
