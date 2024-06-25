@@ -57,9 +57,9 @@ export const postBook = async (data) => {
   }
 };
 
-export const postComment = async (data) => {
+export const postComment = async (data, id) => {
   try {
-    const response = await axios.post(`${API_URL}/books/comments`, data, {
+    const response = await axios.post(`${API_URL}/books/${id}/comments`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

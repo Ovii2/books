@@ -10,6 +10,7 @@ import lt.techin.ovidijus.back.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -26,31 +27,35 @@ public class CommentService {
         this.bookRepository = bookRepository;
     }
 
-    public List<Comment> getAllComments(long bookId) {
-        return commentRepository.findByBookId(bookId);
+    public List<Comment> getAllComments(long id) {
+        return commentRepository.findByBookId(id);
     }
 
-    public Comment addComment(long bookId, CommentDTO commentDTO) {
-        Book book = bookRepository.findById(bookId)
+    public Comment addComment(long id, CommentDTO commentDTO) {
+        User user = checkAuthorized();
+        Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Book not found"));
+
         Comment newComment = new Comment();
+        newComment.setUser(user);
         newComment.setComment(commentDTO.getComment());
         newComment.setBook(book);
+        newComment.setDate(LocalDate.now());
         return commentRepository.save(newComment);
     }
 
-    public Comment updateComment(long bookId, Comment comment, long commentId) throws CommentNotFoundException {
+    public Comment updateComment(long id, Comment comment, long commentId) throws CommentNotFoundException {
         User user = checkAuthorized();
         Comment existingComment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new CommentNotFoundException("Comment not found"));
 
-        if (existingComment.getBook().getId() != bookId) {
+        if (existingComment.getBook().getId() != id) {
             throw new RuntimeException("Comment does not belong to the specified book");
         }
 
-        String author = existingComment.getAuthor();
+        Long authorId = existingComment.getUser().getId();
 
-        if (user.getRole().equals("ADMIN") || user.getUsername().equals(author)) {
+        if (user.getRole().equals("ADMIN") || user.getId().equals(authorId)) {
             if (comment.getComment() != null) {
                 existingComment.setComment(comment.getComment());
             }
@@ -60,17 +65,18 @@ public class CommentService {
         }
     }
 
-    public void deleteComment(long bookId, long commentId) throws CommentNotFoundException {
+    public void deleteComment(long id, long commentId) throws CommentNotFoundException {
         User user = checkAuthorized();
         Comment existingComment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new CommentNotFoundException("Comment not found"));
 
-        if (existingComment.getBook().getId() != bookId) {
+        if (existingComment.getBook().getId() != id) {
             throw new RuntimeException("Comment does not belong to the specified book");
         }
 
-        String author = existingComment.getAuthor();
-        if (user.getRole().equals("ADMIN") || user.getUsername().equals(author)) {
+        Long authorId = existingComment.getUser().getId();
+
+        if (user.getRole().equals("ADMIN") || user.getId().equals(authorId)) {
             commentRepository.deleteById(commentId);
         } else {
             throw new RuntimeException("User not authorized to delete this comment");

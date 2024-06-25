@@ -59,8 +59,6 @@ const BooksForm = () => {
     console.log(data);
     try {
       const response = await postBook(data);
-
-      console.log(response);
       setUpdate((update) => update + 1);
       setIsFormOpen(false);
       reset();

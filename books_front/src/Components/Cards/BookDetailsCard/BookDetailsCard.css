@@ -85,3 +85,8 @@
   color: var(--white);
   padding: 0.5rem 1.5rem;
 }
+
+.no-book-details {
+  margin: 1rem 0;
+  font-weight: 600;
+}

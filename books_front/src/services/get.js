@@ -74,9 +74,9 @@ export const getAllBooksAuth = async () => {
   }
 };
 
-export const getAllCommentsAuth = async (id, commentId) => {
+export const getAllCommentsAuth = async (id) => {
   try {
-    const resp = await axios.get(`${API_URL}/books/${id}/${commentId}`, {
+    const resp = await axios.get(`${API_URL}/books/${id}/comments`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

@@ -7,15 +7,17 @@ import './BookDetailsPage.css';
 import CommentsContext from '../../Context/CommentsContext/CommentContext';
 import CommentsList from '../../Components/Lists/CommentsList/CommentsList';
 import { getAllCommentsAuth } from '../../services/get';
+import { useParams } from 'react-router-dom';
 
 const BookDetailsPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { update, comments, setComments } = useContext(CommentsContext);
+  const { id: bookId, commentId } = useParams();
 
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const data = await getAllCommentsAuth();
+      const data = await getAllCommentsAuth(bookId);
       setComments(data);
     } catch (error) {
       toast.error(error.message);
@@ -25,8 +27,10 @@ const BookDetailsPage = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, [update]);
+    if (bookId) {
+      fetchData();
+    }
+  }, [update, bookId, commentId]);
 
   return (
     <div className='books-details-page-container'>
@@ -37,7 +41,7 @@ const BookDetailsPage = () => {
       ) : comments.length === 0 ? (
         <p className='no-comments'>No comments available</p>
       ) : (
-        <CommentsList />
+        <CommentsList className='comments-list' />
       )}
     </div>
   );

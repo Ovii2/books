@@ -20,6 +20,10 @@ public class Comment {
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;
 
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "author_id",nullable = false)
+    private User user;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -27,9 +31,6 @@ public class Comment {
 
     @Column(name = "comment")
     private String comment;
-
-    @Column(name = "author")
-    private String author;
 
     @Column(name = "date")
     private LocalDate date;

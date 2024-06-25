@@ -1,5 +1,6 @@
 package lt.techin.ovidijus.back.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,6 +21,11 @@ import java.util.List;
 @NoArgsConstructor
 //@AllArgsConstructor
 public class User implements UserDetails {
+
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Comment> comments;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -329,7 +329,7 @@ const BookDetailsCard = () => {
           </div>
         </div>
       ) : (
-        <div>No book details found</div>
+        <div className='no-book-details'>No book details found</div>
       )}
     </div>
   );

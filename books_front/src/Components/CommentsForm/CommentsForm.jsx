@@ -5,10 +5,13 @@ import { toast } from 'react-toastify';
 import { postComment } from '../../services/post';
 
 import './CommentsForm.css';
+import { useParams } from 'react-router-dom';
 
 const CommentsForm = () => {
-  const { setUpdate, setComments } = useContext(CommentsContext);
+  const { setUpdate } = useContext(CommentsContext);
   const [error, setError] = useState('');
+
+  const { id: bookId } = useParams();
 
   const {
     register,
@@ -23,11 +26,9 @@ const CommentsForm = () => {
 
   const formSubmitHandler = async (data) => {
     try {
-      const response = await postComment(data);
+      const response = await postComment(data, bookId);
       setUpdate((update) => update + 1);
-      // setIsFormOpen(false);
       reset();
-      //   navigate('/books');
       toast.success('Comment added!');
       return response;
     } catch (error) {
@@ -40,10 +41,9 @@ const CommentsForm = () => {
     <form className='comments-form' noValidate onSubmit={handleSubmit(formSubmitHandler)}>
       <textarea
         {...register('comment', {
-          required: { value: true, message: 'Comment is required' },
+          required: 'Comment is required',
         })}
         className='comment-input'
-        name=''
         id='comment'
         placeholder='Add comment'
       ></textarea>

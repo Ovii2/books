@@ -51,7 +51,7 @@ const CategoriesForm = () => {
             label='Title'
             placeholder='Add title'
             {...register('title', {
-              required: { value: true, message: 'Title is required' },
+              required: { message: 'Title is required' },
             })}
           />
           {errors.title && <div className='error'>{errors.title.message}</div>}
@@ -63,7 +63,7 @@ const CategoriesForm = () => {
             rows={4}
             placeholder='Add description'
             {...register('description', {
-              required: { value: true, message: 'Description is required' },
+              required: { message: 'Description is required' },
             })}
           />
           {errors.description && <div className='error'>{errors.description.message}</div>}

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin("*")
-@RequestMapping("/books/{bookId}")
+@CrossOrigin(origins = "*")
+@RequestMapping("/books")
 public class CommentController {
 
     private CommentService commentService;
@@ -23,33 +23,33 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<Comment>> getAllComments(@PathVariable long bookId) {
-        List<Comment> comments = commentService.getAllComments(bookId);
+    @GetMapping("/{id}/comments")
+    public ResponseEntity<List<Comment>> getAllComments(@PathVariable long id) {
+        List<Comment> comments = commentService.getAllComments(id);
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<Comment> addComment(@PathVariable long bookId, @RequestBody CommentDTO commentDTO) {
-        Comment newComment = commentService.addComment(bookId, commentDTO);
+    @PostMapping("/{id}/comments")
+    public ResponseEntity<Comment> addComment(@PathVariable long id, @RequestBody CommentDTO commentDTO) {
+        Comment newComment = commentService.addComment(id, commentDTO);
         return new ResponseEntity<>(newComment, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{commentId}")
-    public ResponseEntity<Void> deleteComment(@PathVariable long bookId, @PathVariable long commentId) {
+    @DeleteMapping("/{id}/comments/{commentId}")
+    public ResponseEntity<Void> deleteComment(@PathVariable long id, @PathVariable long commentId) {
         try {
-            commentService.deleteComment(bookId, commentId);
+            commentService.deleteComment(id, commentId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (CommentNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @PatchMapping("/{commentId}")
-    public ResponseEntity<Comment> updateComment(@PathVariable long bookId,@PathVariable long commentId,
+    @PatchMapping("/{id}/comments/{commentId}")
+    public ResponseEntity<Comment> updateComment(@PathVariable long id, @PathVariable long commentId,
                                                  @RequestBody Comment comment) {
         try {
-            Comment updatedComment = commentService.updateComment(bookId,comment, commentId);
+            Comment updatedComment = commentService.updateComment(id, comment, commentId);
             return new ResponseEntity<>(updatedComment, HttpStatus.OK);
         } catch (CommentNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
