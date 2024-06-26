@@ -77,7 +77,7 @@ public class CommentService {
         Long authorId = existingComment.getUser().getId();
 
         if (user.getRole().equals("ADMIN") || user.getId().equals(authorId)) {
-            commentRepository.deleteById(commentId);
+            commentRepository.delete(existingComment);
         } else {
             throw new RuntimeException("User not authorized to delete this comment");
         }
