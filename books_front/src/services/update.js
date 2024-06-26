@@ -15,3 +15,16 @@ export const updateDataAuth = async (id, data) => {
     throw new Error(`Error updating data ${error.message}`);
   }
 };
+
+export const updateCommentAuth = async (bookId, commentId, data) => {
+  try {
+    const resp = await axios.patch(`${API_URL}/books/${bookId}/comments/${commentId}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return resp.data;
+  } catch (error) {
+    throw new Error(`Error updating data ${error.message}`);
+  }
+};

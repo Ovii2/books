@@ -90,3 +90,11 @@
   margin: 1rem 0;
   font-weight: 600;
 }
+
+.errors {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2rem;
+}

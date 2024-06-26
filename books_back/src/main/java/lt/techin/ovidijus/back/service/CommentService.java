@@ -1,5 +1,6 @@
 package lt.techin.ovidijus.back.service;
 
+import lombok.extern.slf4j.Slf4j;
 import lt.techin.ovidijus.back.dto.CommentDTO;
 import lt.techin.ovidijus.back.exceptions.CommentNotFoundException;
 import lt.techin.ovidijus.back.model.Book;
@@ -9,10 +10,13 @@ import lt.techin.ovidijus.back.repository.BookRepository;
 import lt.techin.ovidijus.back.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Transactional
+@Slf4j
 @Service
 public class CommentService {
 
@@ -65,19 +69,19 @@ public class CommentService {
         }
     }
 
-    public void deleteComment(long id, long commentId) throws CommentNotFoundException {
+    public void deleteComment(long commentId) throws CommentNotFoundException {
         User user = checkAuthorized();
         Comment existingComment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new CommentNotFoundException("Comment not found"));
 
-        if (existingComment.getBook().getId() != id) {
-            throw new RuntimeException("Comment does not belong to the specified book");
-        }
-
         Long authorId = existingComment.getUser().getId();
 
         if (user.getRole().equals("ADMIN") || user.getId().equals(authorId)) {
-            commentRepository.delete(existingComment);
+            log.info("Deleting comment with ID: {}", commentId);
+            existingComment.getUser().getComments().remove(existingComment);
+            existingComment.getBook().getComments().remove(existingComment);
+            commentRepository.deleteById(commentId);
+            log.info("Comment with ID: {} deleted successfully", commentId);
         } else {
             throw new RuntimeException("User not authorized to delete this comment");
         }

@@ -1,5 +1,6 @@
 package lt.techin.ovidijus.back.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +22,7 @@ public class Comment {
     private Book book;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "author_id",nullable = false)
+    @JoinColumn(name = "author_id", nullable = false)
     private User user;
 
     @Id

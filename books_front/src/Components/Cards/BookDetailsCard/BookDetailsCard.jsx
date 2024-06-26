@@ -30,8 +30,14 @@ const BookDetailsCard = () => {
   const [editPages, setEditPages] = useState(false);
   const [editDescription, setEditDescription] = useState(false);
   const [editImage, setEditImage] = useState(false);
-  // console.log(book.category.title);
-  const { register, setValue, handleSubmit } = useForm();
+
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   const fetchBook = async (id) => {
     try {
@@ -97,11 +103,9 @@ const BookDetailsCard = () => {
   };
 
   const handleBookCategoryChange = async (data) => {
-    // console.log(data);
-    // console.log('handle' + data.category.title);
     try {
       if (role === 'ADMIN') {
-        await updateDataAuth(`books/${book.id}`, { category: data.category.title });
+        await updateDataAuth(`books/${book.id}`, { categoryId: data.category });
         setUpdate((prev) => !prev);
         setEditCategory(false);
         fetchBook(id);
@@ -125,13 +129,13 @@ const BookDetailsCard = () => {
   };
 
   const handleBookImageChange = async (data) => {
-    console.log(data);
     try {
       if (role === 'ADMIN') {
         await updateDataAuth(`books/${book.id}`, { image: data.image });
         setUpdate((prev) => !prev);
         setEditImage(false);
         fetchBook(id);
+        reset();
       }
     } catch (error) {
       console.error('Error updating image:', error.message);
@@ -149,12 +153,15 @@ const BookDetailsCard = () => {
           <div className='image-container'>
             {editImage && role === 'ADMIN' ? (
               <div className='input-book-image'>
-                <input
-                  className='input-image'
-                  placeholder='Enter book url'
-                  {...register('image')}
-                  onChange={(e) => setValue('image', e.target.value)}
-                />
+                <div className='errors'>
+                  <input
+                    className='input-image'
+                    placeholder='Enter book url'
+                    {...register('image', { required: 'Image url is required' })}
+                    onChange={(e) => setValue('image', e.target.value)}
+                  />
+                  {errors.image && <div className='error'>{errors.image.message}</div>}
+                </div>
                 <CheckIcon
                   sx={{ color: 'green', cursor: 'pointer' }}
                   onClick={handleSubmit(handleBookImageChange)}
@@ -214,7 +221,7 @@ const BookDetailsCard = () => {
                   defaultValue={book.category.id}
                   onChange={(e) => {
                     setValue('category', e.target.value);
-                    // handleBookCategoryChange({ category: e.target.value });
+                    handleBookCategoryChange({ category: e.target.value });
                     setEditCategory(false);
                   }}
                   onBlur={() => setEditCategory(false)}

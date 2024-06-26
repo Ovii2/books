@@ -1,5 +1,6 @@
 package lt.techin.ovidijus.back.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import lt.techin.ovidijus.back.dto.BookDTO;
 import lt.techin.ovidijus.back.exceptions.BookNotFoundException;
 import lt.techin.ovidijus.back.exceptions.CategoryNotFoundException;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/books")
@@ -51,12 +53,15 @@ public class BookController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Book> updateBook(@PathVariable long id, @RequestBody Book book) {
+    public ResponseEntity<Book> updateBook(@PathVariable long id, @RequestBody BookDTO book) {
+        log.info("book category {}", book.getCategoryId());
         try {
             Book updatedBook = bookService.updateBook(id, book);
             return new ResponseEntity<>(updatedBook, HttpStatus.OK);
         } catch (BookNotFoundException | NotAdminException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (CategoryNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 }

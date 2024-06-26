@@ -36,7 +36,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/register", "/login", "/", "/error").permitAll()
                         .requestMatchers("/categories/**").authenticated()
                         .requestMatchers("/books/**").authenticated()
-                        .requestMatchers("/books/**/comments/**").authenticated()
+//                        .requestMatchers("/books/**/comments/**").authenticated()
                         .anyRequest().authenticated())
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)

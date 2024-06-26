@@ -38,9 +38,9 @@ export const deleteBook = async (id) => {
   }
 };
 
-export const deleteComment = async (bookId, commentId) => {
+export const deleteComment = async (commentId) => {
   try {
-    const resp = await axios.delete(`${API_URL}/books/${bookId}/comments/${commentId}`, {
+    const resp = await axios.delete(`${API_URL}/books/comments/${commentId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

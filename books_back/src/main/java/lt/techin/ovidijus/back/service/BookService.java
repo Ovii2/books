@@ -34,7 +34,11 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public Optional<Book> getOneBook(long id){
+    public Optional<Book> getOneBook(Long id) {
+//        return bookRepository.findById(id);
+        if (id == null) {
+            throw new IllegalArgumentException("Id must not be null");
+        }
         return bookRepository.findById(id);
     }
 
@@ -64,14 +68,16 @@ public class BookService {
     }
 
 
-    public Book updateBook(long id, Book book) throws BookNotFoundException, NotAdminException {
+    public Book updateBook(Long id, BookDTO book) throws BookNotFoundException, NotAdminException,
+            CategoryNotFoundException {
+
         User user = checkAuthorized();
         if (!user.getRole().equals("ADMIN")) {
             throw new NotAdminException("Only admins can edit books.");
         }
 
         Book existingBook = bookRepository.findById(id)
-                .orElseThrow(() -> new BookNotFoundException("Book not found"));
+                .orElseThrow(() -> new BookNotFoundException("Book with id: " + id + " not found"));
 
         if (book.getTitle() != null) {
             existingBook.setTitle(book.getTitle());
@@ -88,12 +94,14 @@ public class BookService {
         if (book.getPages() != null) {
             existingBook.setPages(book.getPages());
         }
-        if (book.getCategory() != null) {
-            existingBook.setCategory(book.getCategory());
+        if (book.getCategoryId() != null) {
+            Category cat = categoryRepository.findById(book.getCategoryId())
+                    .orElseThrow(() -> new CategoryNotFoundException("Category with id: " + book.getCategoryId() + " not found"));
+            existingBook.setCategory(cat);
         }
         return bookRepository.save(existingBook);
-
     }
+
 
     public void deleteBook(long id) throws BookNotFoundException, NotAdminException {
         User user = checkAuthorized();
